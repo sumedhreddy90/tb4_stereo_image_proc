@@ -181,11 +181,13 @@ def generate_launch_description():
                 '/link/oakd_pro_rgb_camera_frame/sensor/rgbd_camera/camera_info' +
                 '@sensor_msgs/msg/CameraInfo' +
                 '[ignition.msgs.CameraInfo'],
+                # pass left camera frame as argument
             ['/world/', LaunchConfiguration('world'),
                 '/model/', LaunchConfiguration('robot_name'),
                 '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera/image' +
                 '@sensor_msgs/msg/Image' +
                 '[ignition.msgs.Image'],
+                # pass right camera frame as argument
             ['/world/', LaunchConfiguration('world'),
                 '/model/', LaunchConfiguration('robot_name'),
                 '/link/oakd_pro_right_camera_frame/sensor/rgbd_camera/image' +
@@ -213,11 +215,13 @@ def generate_launch_description():
               LaunchConfiguration('robot_name'),
               '/link/oakd_pro_rgb_camera_frame/sensor/rgbd_camera/camera_info'],
              '/color/camera_info'),
+             # Remap left camera frame
             (['/world/', LaunchConfiguration('world'),
               '/model/',
               LaunchConfiguration('robot_name'),
               '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera/image'],
              '/color/left/image'),
+             # Remap right camera frame
             (['/world/', LaunchConfiguration('world'),
               '/model/',
               LaunchConfiguration('robot_name'),
