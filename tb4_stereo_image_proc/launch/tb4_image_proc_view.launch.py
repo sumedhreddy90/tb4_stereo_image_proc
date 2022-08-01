@@ -41,7 +41,18 @@ def generate_launch_description():
     PythonLaunchDescriptionSource([turtlebot4_stereo_image_proc_launch])
     )
 
-
+    # image_proc_remapping = Node(
+    # package='stereo_image_proc',
+    # namespace='stereo_image_proc',
+    # executable='DisparityNode',
+    # name='stereo_image_proc',
+    # remappings=[
+    # ('left/image_rect', [LaunchConfiguration('left_namespace'), '/image_rect']),
+    # ('left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
+    # ('right/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),
+    # ('right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
+    # ]
+    # )
     # Define LaunchDescription variable
     launch_desc = LaunchDescription(ARGUMENTS)
     launch_desc.add_action(turtlebot4_ros_ignition)
