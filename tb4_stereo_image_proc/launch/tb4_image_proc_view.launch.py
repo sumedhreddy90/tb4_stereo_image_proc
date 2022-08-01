@@ -13,7 +13,7 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
 
-ARGUMENTS = [DeclareLaunchArgument('world', default_value='my_world',
+ARGUMENTS = [DeclareLaunchArgument('world', default_value='bug2_world',
                           description='A random Ignition World')]
 
 
@@ -22,10 +22,14 @@ def generate_launch_description():
     # Directories
     pkg_turtlebot4_ignition_bringup = get_package_share_directory(
         'turtlebot4_ignition_bringup')
-
+    pkg_stereo_image_proc = get_package_share_directory(
+        'stereo_image_proc'
+    )
     # Paths
     turtlebot4_ros_ignition_launch = PathJoinSubstitution(
     [pkg_turtlebot4_ignition_bringup, 'launch', 'ignition.launch.py'])
+    turtlebot4_stereo_image_proc_launch = PathJoinSubstitution(
+    [pkg_stereo_image_proc, 'launch', 'stereo_image_proc.launch.py'])
 
     # ROS world config
     turtlebot4_ros_ignition = IncludeLaunchDescription(
@@ -33,9 +37,14 @@ def generate_launch_description():
         launch_arguments=[('world', LaunchConfiguration('world'))]
     )
 
+    turtlebot4_stereo_image_proc= IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([turtlebot4_stereo_image_proc_launch])
+    )
+
 
     # Define LaunchDescription variable
     launch_desc = LaunchDescription(ARGUMENTS)
     launch_desc.add_action(turtlebot4_ros_ignition)
+    launch_desc.add_action(turtlebot4_stereo_image_proc)
 
     return launch_desc
