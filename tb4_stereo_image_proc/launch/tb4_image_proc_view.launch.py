@@ -13,7 +13,7 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
 
-ARGUMENTS = [DeclareLaunchArgument('world', default_value='bug2_world',
+ARGUMENTS = [DeclareLaunchArgument('world', default_value='my_world',
                           description='A random Ignition World')]
 
 
