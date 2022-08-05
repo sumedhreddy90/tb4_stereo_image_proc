@@ -54,7 +54,8 @@ class TurtlePerception3D(Node):
                                                 self.right_cam_info_callback, qos_profile=qos_profile_sensor_data)
         # Initialize bridge between ROS2 and OpenCV
         self.bridge = CvBridge()
-
+        self.left_info = CameraInfo()
+        self.right_info = CameraInfo()
 
     def left_perception_callback(self, frames_data):
         """
@@ -63,7 +64,7 @@ class TurtlePerception3D(Node):
         Args: frames_data
         """
         try:
-            self.publisher_left_.publish(frames_data)
+
             
             self.get_logger().info('Receiving Turtlebot4 visual frames_data')
 
@@ -73,7 +74,9 @@ class TurtlePerception3D(Node):
             resized_image = cv2.resize(current_frame, (720, 480))
             gray = cv2.cvtColor(gray_current_frame, cv2.COLOR_BGR2GRAY)
             gray_msg = self.bridge.cv2_to_imgmsg(gray, '8UC1')
+            self.publisher_left_.publish(frames_data)
             self.publisher_left_mono.publish(gray_msg)
+            self.publisher_left_info.publish(self.left_info)
             # Poping each and every frame
             cv2.imshow("TurtleBot4 Left Camera View", resized_image)
 
@@ -90,17 +93,18 @@ class TurtlePerception3D(Node):
         Args: frames_data
         """
         try:
-            self.publisher_right_.publish(frames_data)
+            
             self.get_logger().info('Receiving Turtlebot4 visual frames_data')
 
             # current frame
             current_frame = self.bridge.imgmsg_to_cv2(frames_data, desired_encoding="bgr8")
-
             resized_image = cv2.resize(current_frame, (720, 480))
             gray_current_frame = current_frame.copy()
             gray = cv2.cvtColor(gray_current_frame, cv2.COLOR_BGR2GRAY)
             gray_msg = self.bridge.cv2_to_imgmsg(gray, '8UC1')
-            self.publisher_left_mono.publish(gray_msg)
+            self.publisher_right_.publish(frames_data)
+            self.publisher_right_mono.publish(gray_msg)
+            self.publisher_right_info.publish(self.right_info)
             # Poping each and every frame
             cv2.imshow("TurtleBot4 Right Camera View", resized_image)
 
@@ -110,11 +114,11 @@ class TurtlePerception3D(Node):
             print(e)
 
     def left_cam_info_callback(self, cam_info_msg):
-        self.publisher_left_info.publish(cam_info_msg)
+        self.left_info = cam_info_msg
 
 
     def right_cam_info_callback(self, cam_info_msg):
-        self.publisher_right_info.publish(cam_info_msg)
+        self.right_info = cam_info_msg
 
 def main(args=None):
     """

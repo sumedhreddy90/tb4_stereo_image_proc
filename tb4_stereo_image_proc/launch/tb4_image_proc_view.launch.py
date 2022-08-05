@@ -9,12 +9,25 @@ from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch.conditions import IfCondition, LaunchConfigurationEquals
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
-
+from launch_ros.actions import ComposableNodeContainer
+from launch_ros.descriptions import ComposableNode
 from launch_ros.actions import Node
+from launch.substitutions import  LaunchConfiguration
+from launch.conditions import LaunchConfigurationEquals, LaunchConfigurationNotEquals
+from launch_ros.actions.lifecycle_node import LifecycleNode 
+from launch_ros.descriptions import ComposableNode
+from launch_ros.actions import ComposableNodeContainer, LoadComposableNodes
+from launch.actions import DeclareLaunchArgument
+
 
 
 ARGUMENTS = [DeclareLaunchArgument('world', default_value='my_world',
-                          description='A random Ignition World')]
+                          description='A random Ignition World'),
+            DeclareLaunchArgument(
+            name='approximate_sync', default_value='True',
+            description='Whether to use approximate synchronization of topics. Set to true if '
+                        'the left and right cameras do not produce exactly synced timestamps.'
+        )]
 
 
 def generate_launch_description():
@@ -34,11 +47,13 @@ def generate_launch_description():
     # ROS world config
     turtlebot4_ros_ignition = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([turtlebot4_ros_ignition_launch]),
-        launch_arguments=[('world', LaunchConfiguration('world'))]
+        launch_arguments=[('world', LaunchConfiguration('world'))],
     )
 
     turtlebot4_stereo_image_proc= IncludeLaunchDescription(
-    PythonLaunchDescriptionSource([turtlebot4_stereo_image_proc_launch])
+    PythonLaunchDescriptionSource([turtlebot4_stereo_image_proc_launch]),
+    launch_arguments=[('approximate_sync', LaunchConfiguration('approximate_sync'))],
+
     )
 
     # image_proc_remapping = Node(
@@ -54,8 +69,43 @@ def generate_launch_description():
     # ]
     # )
     # Define LaunchDescription variable
+    # disparity_node = [ComposableNode(
+    #             package="stereo_image_proc",
+    #             plugin="stereo_image_proc::DisparityNode",
+    #             name='disparity_node',
+    #             namespace='disparity_node',
+    #             remappings=[('left/image_rect', [LaunchConfiguration('left_namespace'), '/color/left/image']),
+    #             ],
+    #         ),
+    #          ComposableNode(
+    #             package="stereo_image_proc",
+    #             plugin="stereo_image_proc::PointCloudNode",
+    #             name='point_cloud_node',
+    #             namespace='point_cloud_node',
+    #             remappings=[],
+    #         ),
+    #         ]
+
+    # container = ComposableNodeContainer(
+    #     condition=LaunchConfigurationNotEquals('container', ''),
+    #     name='stereo_image_proc_container',
+    #     namespace='stereo',
+    #     package='rclcpp_components',
+    #     executable='component_container',
+    #     composable_node_descriptions=[
+    #         disparity_node
+    #     ]
+    # )
+    # lcn = LoadComposableNodes(
+    #     condition=LaunchConfigurationEquals('container', ''),
+    #     composable_node_descriptions=[disparity_node],
+    #     target_container=LaunchConfiguration('container'),
+    # )
+
     launch_desc = LaunchDescription(ARGUMENTS)
     launch_desc.add_action(turtlebot4_ros_ignition)
     launch_desc.add_action(turtlebot4_stereo_image_proc)
+    # launch_desc.add_action(container)
+    # launch_desc.add_action(lcn)
 
     return launch_desc
