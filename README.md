@@ -10,7 +10,7 @@ cd ~/image_ws/ && colcon build
 source install/setup.bash
 ```
 
-## Launch Turtlebot4 ignition bringup along with stereo image proc Node
+## Launch Turtlebot4 ignition bringup which includes stereo image proc Node
 
 ```
 ros2 launch tb4_stereo_image_proc tb4_image_proc_view.launch.py
