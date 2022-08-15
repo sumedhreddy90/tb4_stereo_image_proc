@@ -25,3 +25,10 @@ ros2 launch tb4_stereo_image_proc tb4_image_proc_view.launch.py
 
 https://user-images.githubusercontent.com/24978535/184568269-64b268f1-ef04-4f53-b543-70a1d2bc50c0.mp4
 
+## Environment
+This repo is tested on 
+- Ubuntu 20.04
+- ROS2 Galactic
+- Gazebo Ignition Edifice
+
+
