@@ -18,6 +18,7 @@ from launch_ros.actions.lifecycle_node import LifecycleNode
 from launch_ros.descriptions import ComposableNode
 from launch_ros.actions import ComposableNodeContainer, LoadComposableNodes
 from launch.actions import DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, ExecuteProcess, SetEnvironmentVariable
 
 
 
@@ -38,6 +39,7 @@ def generate_launch_description():
     pkg_stereo_image_proc = get_package_share_directory(
         'stereo_image_proc'
     )
+
     # Paths
     turtlebot4_ros_ignition_launch = PathJoinSubstitution(
     [pkg_turtlebot4_ignition_bringup, 'launch', 'ignition.launch.py'])
@@ -55,6 +57,15 @@ def generate_launch_description():
     launch_arguments=[('approximate_sync', LaunchConfiguration('approximate_sync'))],
 
     )
+    # View Disparity Image
+    disparity_viewer = Node(
+        package='image_view',
+        executable='disparity_view',
+        arguments=[
+            'image', '/disparity',
+            'DisparityImage',
+            ],
+        output='screen')
 
     launch_desc = LaunchDescription(ARGUMENTS)
     launch_desc.add_action(turtlebot4_ros_ignition)
