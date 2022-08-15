@@ -10,13 +10,13 @@ cd ~/image_ws/ && colcon build
 source install/setup.bash
 ```
 
-## Launch Turtlebot4 ignition bringup 
+## Launch Turtlebot4 ignition bringup along with stereo image proc Node
 
 ```
 ros2 launch tb4_stereo_image_proc tb4_image_proc_view.launch.py
 ```
 
-## Launch Disparity 
+## Launch Disparity viewer
 ```
  ros2 run image_view disparity_view image:=/disparity DisparityImage
 ```
