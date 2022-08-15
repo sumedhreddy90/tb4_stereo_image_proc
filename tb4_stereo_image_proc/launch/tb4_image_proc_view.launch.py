@@ -56,56 +56,8 @@ def generate_launch_description():
 
     )
 
-    # image_proc_remapping = Node(
-    # package='stereo_image_proc',
-    # namespace='stereo_image_proc',
-    # executable='DisparityNode',
-    # name='stereo_image_proc',
-    # remappings=[
-    # ('left/image_rect', [LaunchConfiguration('left_namespace'), '/image_rect']),
-    # ('left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
-    # ('right/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),
-    # ('right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
-    # ]
-    # )
-    # Define LaunchDescription variable
-    # disparity_node = [ComposableNode(
-    #             package="stereo_image_proc",
-    #             plugin="stereo_image_proc::DisparityNode",
-    #             name='disparity_node',
-    #             namespace='disparity_node',
-    #             remappings=[('left/image_rect', [LaunchConfiguration('left_namespace'), '/color/left/image']),
-    #             ],
-    #         ),
-    #          ComposableNode(
-    #             package="stereo_image_proc",
-    #             plugin="stereo_image_proc::PointCloudNode",
-    #             name='point_cloud_node',
-    #             namespace='point_cloud_node',
-    #             remappings=[],
-    #         ),
-    #         ]
-
-    # container = ComposableNodeContainer(
-    #     condition=LaunchConfigurationNotEquals('container', ''),
-    #     name='stereo_image_proc_container',
-    #     namespace='stereo',
-    #     package='rclcpp_components',
-    #     executable='component_container',
-    #     composable_node_descriptions=[
-    #         disparity_node
-    #     ]
-    # )
-    # lcn = LoadComposableNodes(
-    #     condition=LaunchConfigurationEquals('container', ''),
-    #     composable_node_descriptions=[disparity_node],
-    #     target_container=LaunchConfiguration('container'),
-    # )
-
     launch_desc = LaunchDescription(ARGUMENTS)
     launch_desc.add_action(turtlebot4_ros_ignition)
     launch_desc.add_action(turtlebot4_stereo_image_proc)
-    # launch_desc.add_action(container)
-    # launch_desc.add_action(lcn)
 
     return launch_desc

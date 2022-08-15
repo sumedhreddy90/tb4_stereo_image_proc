@@ -141,7 +141,7 @@ StereoViewNode::StereoViewNode(const rclcpp::NodeOptions & options)
 
   // Synchronize input topics. Optionally do approximate synchronization.
   queue_size_ = this->declare_parameter("queue_size", 5);
-  bool approx = this->declare_parameter("approximate_sync", false);
+  bool approx = this->declare_parameter("approximate_sync", true);
 
   if (approx) {
     approximate_sync_.reset(

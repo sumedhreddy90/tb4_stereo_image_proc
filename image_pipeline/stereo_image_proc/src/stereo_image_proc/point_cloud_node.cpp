@@ -99,7 +99,7 @@ PointCloudNode::PointCloudNode(const rclcpp::NodeOptions & options)
 
   // Declare/read parameters
   int queue_size = this->declare_parameter("queue_size", 5);
-  bool approx = this->declare_parameter("approximate_sync", false);
+  bool approx = this->declare_parameter("approximate_sync", true);
   this->declare_parameter("use_system_default_qos", false);
   rcl_interfaces::msg::ParameterDescriptor descriptor;
   // TODO(ivanpauno): Confirm if using point cloud padding in `sensor_msgs::msg::PointCloud2`

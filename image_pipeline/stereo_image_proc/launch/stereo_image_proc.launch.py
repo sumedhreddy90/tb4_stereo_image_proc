@@ -71,10 +71,10 @@ def generate_launch_description():
                 'full_dp': LaunchConfiguration('full_dp'),
             }],
             remappings=[
-                ('left/image_rect', [LaunchConfiguration('left_namespace'), '/image_rect']),
-                ('left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
-                ('right/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),
-                ('right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
+                ('left/image_rect', [ '/color/left/image']),
+                ('left/camera_info', ['/color/left/camera_info']),
+                ('right/image_rect', [ '/color/right/image']),
+                ('right/camera_info', [ '/color/right/camera_info']),
             ]
         ),
         ComposableNode(
@@ -87,11 +87,11 @@ def generate_launch_description():
                 'use_system_default_qos': LaunchConfiguration('use_system_default_qos'),
             }],
             remappings=[
-                ('left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
-                ('right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
+                ('left/camera_info', [ '/color/left/camera_info']),
+                ('right/camera_info', [ '/color/right/camera_info']),
                 (
                     'left/image_rect_color',
-                    [LaunchConfiguration('left_namespace'), '/image_rect_color']
+                    ['/color/left/image']
                 ),
             ]
         ),
