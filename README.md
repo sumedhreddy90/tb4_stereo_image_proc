@@ -118,7 +118,7 @@
  /left/image_rect_color
 ```
 
-# Intructions to reproduce the Tutorial
+# Instructions to reproduce the Tutorial
 ## Clone the repository into workspace
 ```
 mkdir image_ws
