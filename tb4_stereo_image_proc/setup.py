@@ -24,7 +24,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'tb4_stereo_pipeline = tb4_stereo_image_proc.tb4_stereo_pipeline:main',
         ],
     },
 )
