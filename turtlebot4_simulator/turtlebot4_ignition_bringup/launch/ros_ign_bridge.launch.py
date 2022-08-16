@@ -205,6 +205,16 @@ def generate_launch_description():
                 '/link/oakd_pro_right_camera_frame/sensor/rgbd_camera/camera_info' +
                 '@sensor_msgs/msg/CameraInfo' +
                 '[ignition.msgs.CameraInfo'],
+            ['/world/', LaunchConfiguration('world'),
+                '/model/', LaunchConfiguration('robot_name'),
+                '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera/image' +
+                '@sensor_msgs/msg/Image' +
+                '[ignition.msgs.Image'],
+            ['/world/', LaunchConfiguration('world'),
+                '/model/', LaunchConfiguration('robot_name'),
+                '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera_rect/image' +
+                '@sensor_msgs/msg/Image' +
+                '[ignition.msgs.Image'],
                 ],
         remappings=[
             (['/world/', LaunchConfiguration('world'),
@@ -232,23 +242,29 @@ def generate_launch_description():
               '/model/',
               LaunchConfiguration('robot_name'),
               '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera/image'],
-             '/color/left/image'),
+             '/left/image_rect'),
              # Remap right camera frame
             (['/world/', LaunchConfiguration('world'),
               '/model/',
               LaunchConfiguration('robot_name'),
               '/link/oakd_pro_right_camera_frame/sensor/rgbd_camera/image'],
-             '/color/right/image'),
+             '/right/image_rect'),
             (['/world/', LaunchConfiguration('world'),
               '/model/',
               LaunchConfiguration('robot_name'),
               '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera/camera_info'],
-             '/color/left/camera_info'),
+             '/left/camera_info'),
             (['/world/', LaunchConfiguration('world'),
               '/model/',
               LaunchConfiguration('robot_name'),
               '/link/oakd_pro_right_camera_frame/sensor/rgbd_camera/camera_info'],
-             '/color/right/camera_info'),
+             '/right/camera_info'),
+             # Remap image_rect_color
+            (['/world/', LaunchConfiguration('world'),
+              '/model/',
+              LaunchConfiguration('robot_name'),
+              '/link/oakd_pro_left_camera_frame/sensor/rgbd_camera_rect/image'],
+             '/left/image_rect_color'),
                 ],
         condition=LaunchConfigurationEquals('model', 'standard'))
 

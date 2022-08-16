@@ -55,7 +55,6 @@ def generate_launch_description():
     turtlebot4_stereo_image_proc= IncludeLaunchDescription(
     PythonLaunchDescriptionSource([turtlebot4_stereo_image_proc_launch]),
     launch_arguments=[('approximate_sync', LaunchConfiguration('approximate_sync'))],
-
     )
     # View Disparity Image
     disparity_viewer = Node(
