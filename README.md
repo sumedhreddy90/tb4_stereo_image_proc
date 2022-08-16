@@ -29,7 +29,7 @@
 
 `'/link/oakd_pro_left_camera_frame/sensor/rgbd_camera/image' +
                 '@sensor_msgs/msg/Image' +
-                '[ignition.msgs.Image'`
+                '[ignition.msgs.Image]'`
 
 ```
     # Camera sensor bridge
@@ -109,13 +109,13 @@
                 ],
         condition=LaunchConfigurationEquals('model', 'standard'))
 ```
-3. Now, we got all the topics that supports our [stereo_image_proc](https://github.com/ros-perception/image_pipeline/tree/galactic/stereo_image_proc) package. Create a package with launch file that launches all the required nodes of stereo_image_proc package along with turtlebot4 ignition bringup package with rempapping of topics as launch arguments. The launch file is self explanatory and can be found at [tb4_stereo_image_proc](https://github.com/sumedhreddy90/tb4_stereo_image_proc/blob/main/tb4_stereo_image_proc/launch/tb4_image_proc_view.launch.py). Topics that are essential for generation of disparity and pointcloud2 are:
+3. Now, we got all the topics that supports our [stereo_image_proc](https://github.com/ros-perception/image_pipeline/tree/galactic/stereo_image_proc) package. Create a package with launch file that launches all the required nodes of stereo_image_proc package along with turtlebot4 ignition bringup package with rempapping of topics as launch arguments. The launch file is self explanatory and can be found at [tb4_stereo_image_proc](https://github.com/sumedhreddy90/tb4_stereo_image_proc/blob/main/tb4_stereo_image_proc/launch/tb4_image_proc_view.launch.py). Topics that are essential for generation of disparity and pointcloud2 are: (Make sure your stereo camera is publishing the below topics)
 ```
  /left/image_rect
  /left/camera_info
  /right/image_rect
  /right/camera_info
- left/image_rect_color
+ /left/image_rect_color
 ```
 
 # Intructions to reproduce the Tutorial
